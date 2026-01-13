@@ -20,7 +20,12 @@ import {
 
 function AppContent() {
   const { loading, error, metrics, derivedSorted, addTask, updateTask, deleteTask, undoDelete, lastDeleted } = useTasksContext();
-  const handleCloseUndo = () => {};
+  const handleCloseUndo = useCallback(() => {
+    if (lastDeleted) {
+      setActivity(prev => prev);
+    }
+  }, [lastDeleted]);
+
   const [q, setQ] = useState('');
   const [fStatus, setFStatus] = useState<string>('All');
   const [fPriority, setFPriority] = useState<string>('All');
@@ -127,7 +132,7 @@ function AppContent() {
           {!loading && !error && <AnalyticsDashboard tasks={filtered} />}
           {!loading && !error && <ActivityLog items={activity} />}
           <UndoSnackbar open={!!lastDeleted} onClose={handleCloseUndo} onUndo={handleUndo} />
-         </Stack>
+        </Stack>
       </Container>
     </Box>
   );
