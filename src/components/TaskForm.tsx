@@ -73,10 +73,10 @@ export default function TaskForm({ open, onClose, onSubmit, existingTitles, init
       title: title.trim(),
       revenue: typeof revenue === 'number' ? revenue : 0,
       timeTaken: safeTime,
-      priority: ((priority || 'Medium') as Priority),
-      status: ((status || 'Todo') as Status),
+      priority: priority as Priority,
+      status: status as Status,
       notes: notes.trim() || undefined,
-      ...(initial ? { id: initial.id } : {}),
+      createdAt: initial?.createdAt ?? new Date().toISOString(),
     };
     onSubmit(payload);
     onClose();
